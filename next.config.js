@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Hapus baris output: 'export' tadi
+  // Hapus semua baris output atau trailingSlash jika masih ada
 };
 
 module.exports = nextConfig;
