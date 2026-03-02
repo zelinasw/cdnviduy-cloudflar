@@ -1,35 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import Script from 'next/script';
 
-// 1. DATA FETCHING SISI SERVER (IRIT REQUEST VERCEL)
-export async function getStaticProps() {
-  const { data: initialVideos } = await supabase
-    .from('videos1')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  return {
-    props: {
-      initialVideos: initialVideos || [],
-    },
-    // Update data setiap 60 detik (Sangat menghemat Edge Requests)
-    revalidate: 60, 
-  };
-}
-
-export default function Home({ initialVideos }) {
-  const [videos, setVideos] = useState(initialVideos);
+export default function Home() {
+  const [videos, setVideos] = useState([]);
   const [filter, setFilter] = useState('terbaru');
+  const [loading, setLoading] = useState(true);
 
-  // 2. FUNGSI FILTER (TANPA REQUEST DATABASE LAGI)
+  // AMBIL DATA DARI SUPABASE (Client-side agar lancar di Cloudflare)
+  useEffect(() => {
+    async function fetchVideos() {
+      const { data, error } = await supabase
+        .from('videos1')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (!error && data) {
+        setVideos(data);
+      }
+      setLoading(false);
+    }
+    fetchVideos();
+  }, []);
+
   const handleFilter = (tipe) => {
     setFilter(tipe);
     const sorted = [...videos];
     if (tipe === 'terbaru') {
       sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     } else {
-      sorted.sort((a, b) => a.title.localeCompare(b.title));
+      sorted.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
     }
     setVideos(sorted);
   };
@@ -122,6 +122,9 @@ export default function Home({ initialVideos }) {
           <button onClick={() => handleFilter('abjad')} style={{ padding: '10px 20px', borderRadius: '25px', border: 'none', cursor: 'pointer', backgroundColor: filter === 'abjad' ? '#f00' : '#222', color: '#fff', fontWeight: 'bold', fontSize: '14px' }}> 🔠 A-Z </button>
         </div>
 
+        {/* LOADING STATE */}
+        {loading && <p style={{ textAlign: 'center', color: '#888' }}>Memuat video gacor...</p>}
+
         {/* GRID VIDEO */}
         <div className="video-grid">
           {videos.map((vid) => (
@@ -129,7 +132,6 @@ export default function Home({ initialVideos }) {
               {isNew(vid.created_at) && <div className="badge-new">BARU</div>}
 
               <div className="thumb-container" onClick={() => window.location.href = `/${vid.videy_id}`}>
-                {/* THUMBNAIL OTOMATIS (METADATA ONLY AGAR IRIT & MUNCUL GAMBAR) */}
                 <video 
                   width="100%" 
                   preload="metadata" 
@@ -165,4 +167,3 @@ export default function Home({ initialVideos }) {
     </div>
   );
 }
-
