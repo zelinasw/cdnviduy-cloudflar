@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   images: {
     unoptimized: true,
   },
+  // Memastikan folder output rapi untuk Cloudflare
+  distDir: '.next',
 };
 
 module.exports = nextConfig;
