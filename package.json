@@ -11,5 +11,8 @@
     "react": "latest",
     "react-dom": "latest",
     "@supabase/supabase-js": "latest"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "latest"
   }
 }
