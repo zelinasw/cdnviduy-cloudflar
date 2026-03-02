@@ -3,9 +3,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // INI JURUSNYA: Memaksa Cloudflare mengenali rute halaman
-  trailingSlash: true,
-  output: 'export', 
+  // JANGAN pakai trailingSlash atau output: export dulu
 };
 
 module.exports = nextConfig;
