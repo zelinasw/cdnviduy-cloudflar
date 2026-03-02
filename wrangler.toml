@@ -1,3 +1,8 @@
+name = "cdnviduy-cloudflar"
+pages_build_output_dir = ".vercel/output"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nextjs_pages"]
+
 [vars]
 NEXT_PUBLIC_SUPABASE_URL = "https://yfiligeaspgbzqomnavf.supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlmaWxpZ2Vhc3BnYnpxb21uYXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMDQwNDcsImV4cCI6MjA4Nzg4MDA0N30.5iHpL1FiXZFU0lE5fz5WFISK-dLcr7eDQ0bbjpZjBbw"
