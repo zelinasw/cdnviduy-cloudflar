@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export', // Ini akan memaksa Next.js jadi HTML statis
   images: {
     unoptimized: true,
   },
-  // Memastikan folder output rapi untuk Cloudflare
-  distDir: '.next',
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;
