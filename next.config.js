@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Memaksa Next.js menghasilkan folder yang bisa dibaca Cloudflare
+  distDir: '.next',
   images: {
     unoptimized: true,
   },
-  // Ini penting agar Cloudflare tidak bingung dengan routing
-  trailingSlash: true,
 };
 
 module.exports = nextConfig;
